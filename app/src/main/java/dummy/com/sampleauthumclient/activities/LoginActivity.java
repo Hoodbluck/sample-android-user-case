@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity {
     @UiThread
     protected void launchSuccessActivity(User user) {
         SuccessLoggedInActivity_.intent(LoginActivity.this)
-                .mUser(user)
+                .mWelcomeMessage("Welcome back, "+user.getFirstName())
                 .start();
     }
 

@@ -8,7 +8,6 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import dummy.com.sampleauthumclient.R;
-import dummy.com.sampleauthumclient.models.User;
 
 /**
  * Created on 7/19/15.
@@ -21,10 +20,10 @@ public class SuccessLoggedInActivity extends BaseActivity {
     TextView mWelcomeText;
 
     @Extra
-    User mUser;
+    String mWelcomeMessage;
 
     @AfterViews
     public void afterViews() {
-        mWelcomeText.setText(getString(R.string.welcome, mUser.getFirstName()));
+        mWelcomeText.setText(mWelcomeMessage);
     }
 }

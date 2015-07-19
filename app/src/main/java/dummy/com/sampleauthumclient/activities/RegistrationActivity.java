@@ -44,7 +44,7 @@ public class RegistrationActivity  extends BaseActivity {
     public void onRegisterClick() {
         mUserDatabase.addUser(mUser);
         SuccessLoggedInActivity_.intent(this)
-                .mUser(mUser)
+                .mWelcomeMessage("Welcome, " + mUser.getFirstName())
                 .start();
 
     }
