@@ -1,6 +1,5 @@
 package dummy.com.sampleauthumclient.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +8,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 
 import dummy.com.sampleauthumclient.R;
+import dummy.com.sampleauthumclient.models.User;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
@@ -44,6 +44,9 @@ public class LoginActivity extends BaseActivity {
     @Click(R.id.authum_button)
     public void onAuthumButtonClick() {
         //TODO see if user is in database
-        RegistrationActivity_.intent(this).start();
+        User user = new User("Skye", "Schneider", "skye@dominos.com", "");
+        RegistrationActivity_.intent(this)
+                .mUser(user)
+                .start();
     }
 }

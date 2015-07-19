@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * @author Skye Schneider
  */
-public class User {
+public class User implements Parcelable {
     @SerializedName("userId")
     private long userId;
     @SerializedName("firstName")
@@ -29,6 +29,10 @@ public class User {
         this.lastName = lastName;
         this. email = email;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public long getUserId() {
@@ -79,6 +83,7 @@ public class User {
         this.deviceToken = deviceToken;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,7 +98,6 @@ public class User {
         dest.writeString(this.password);
         dest.writeString(this.deviceToken);
     }
-
 
     protected User(Parcel in) {
         this.userId = in.readLong();

@@ -3,6 +3,7 @@ package dummy.com.sampleauthumclient.activities;
 import android.widget.EditText;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -21,16 +22,24 @@ public class RegistrationActivity  extends BaseActivity {
     @Extra
     User mUser;
     @ViewById(R.id.first_name_input)
-    EditText mfirstNameInput;
+    EditText mFirstNameInput;
     @ViewById(R.id.last_name_input)
-    EditText mlastNameInput;
+    EditText mLastNameInput;
     @ViewById(R.id.email_input)
-    EditText memailInput;
+    EditText mEmailInput;
 
     @AfterViews
     public void afterViews() {
-        mfirstNameInput.setText(mUser.getFirstName());
-        mlastNameInput.setText(mUser.getLastName());
-        memailInput.setText(mUser.getEmail());
+        mFirstNameInput.setText(mUser.getFirstName());
+        mLastNameInput.setText(mUser.getLastName());
+        mEmailInput.setText(mUser.getEmail());
+    }
+
+    @Click(R.id.register_button)
+    public void onRegisterClick() {
+        SuccessLoggedInActivity_.intent(this)
+                .mUser(mUser)
+                .start();
+
     }
 }
