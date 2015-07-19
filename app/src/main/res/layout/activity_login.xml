@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             style="@android:style/Widget.Holo.Button"
             android:textColor="@color/accent_color"
-            android:text="AUTHUM"/>
+            android:text="@string/log_in_with_authum"/>
     </LinearLayout>
 
 </RelativeLayout>
