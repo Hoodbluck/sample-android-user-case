@@ -1,17 +1,31 @@
 package dummy.com.sampleauthumclient.activities;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 
 import dummy.com.sampleauthumclient.R;
+import dummy.com.sampleauthumclient.db.UserDatabase;
+import dummy.com.sampleauthumclient.manager.UserManager;
 import dummy.com.sampleauthumclient.models.User;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
+
+    @Bean
+    UserDatabase mUserDatabase;
+
+    @Bean
+    UserManager mUserManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +58,57 @@ public class LoginActivity extends BaseActivity {
     @Click(R.id.authum_button)
     public void onAuthumButtonClick() {
         //TODO see if user is in database
-        User user = new User("Skye", "Schneider", "skye@dominos.com", "");
-        RegistrationActivity_.intent(this)
+        String URL = "content://com.hoodbluck.authum.provider/email";
+        Uri email = Uri.parse(URL);
+        Cursor c = getContentResolver().query(email, null, null, null, null);
+        if (c == null) {
+            return;
+        }
+
+        if (!c.moveToFirst()) {
+            Toast.makeText(this, " no content yet!", Toast.LENGTH_LONG).show();
+        }else{
+            authenticateUser(c.getString(0));
+
+        }
+        c.close();
+
+    }
+
+    @Background
+    protected void authenticateUser(String email) {
+        mUserManager.authenicate(email, new UserManager.AuthumAuthenticationCallback() {
+            @Override
+            public void authenticationSuccess(User user) {
+                User u = mUserDatabase.getUser(user.getEmail());
+                if (u == null) {
+                    launchRegistrationActivity(user);
+                } else {
+                    launchSuccessActivity(user);
+                }
+            }
+
+            @Override
+            public void authenticationFailure() {
+
+            }
+        });
+
+
+    }
+
+    @UiThread
+    protected void launchSuccessActivity(User user) {
+        SuccessLoggedInActivity_.intent(LoginActivity.this)
+                .mUser(user)
+                .start();
+    }
+
+    @UiThread
+    protected void launchRegistrationActivity(User user) {
+        RegistrationActivity_.intent(LoginActivity.this)
                 .mUser(user)
                 .start();
     }
 }
+

@@ -1,6 +1,6 @@
 package dummy.com.sampleauthumclient.data.http;
 
-import org.androidannotations.annotations.rest.Post;
+import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Rest;
 import org.androidannotations.api.rest.RestClientHeaders;
 import org.androidannotations.api.rest.RestClientRootUrl;
@@ -20,7 +20,7 @@ import dummy.com.sampleauthumclient.models.AuthumResponse;
         interceptors = RestHeadInterceptor.class)
 public interface AuthumInterface extends RestClientRootUrl, RestClientSupport, RestClientHeaders {
 
-        @Post("/user/{email}/auth")
-        AuthumResponse getUser(String email);
+        @Get("/client/{clientId}/user/email/{userEmail}/auth")
+        AuthumResponse authenticate(String clientId, String userEmail);
 
 }

@@ -42,8 +42,8 @@ public class AuthumResponse<T>{
     private T value;
 
 
-    public User getValue() {
-        return (User)value;
+    public String getValue() {
+        return (String)value;
     }
 
     public void setValue(T value) {

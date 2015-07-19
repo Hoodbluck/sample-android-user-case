@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.androidannotations.annotations.EBean;
+
 import dummy.com.sampleauthumclient.models.User;
 
 /**
@@ -13,6 +15,7 @@ import dummy.com.sampleauthumclient.models.User;
  *
  * @author Skye Schneider
  */
+@EBean
 public class UserDatabase extends SQLiteOpenHelper{
 
     // All Static variables
@@ -112,7 +115,7 @@ public class UserDatabase extends SQLiteOpenHelper{
      *
      * @return
      */
-    public User getAllGamesForSystem(String email) {
+    public User getUser(String email) {
         // Select All Query
         //TODO create a sanitized query
 
