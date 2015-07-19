@@ -14,6 +14,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 
 import dummy.com.sampleauthumclient.R;
+import dummy.com.sampleauthumclient.data.http.AuthumClient;
 import dummy.com.sampleauthumclient.db.UserDatabase;
 import dummy.com.sampleauthumclient.manager.UserManager;
 import dummy.com.sampleauthumclient.models.User;
@@ -26,6 +27,9 @@ public class LoginActivity extends BaseActivity {
 
     @Bean
     UserManager mUserManager;
+
+    @Bean
+    AuthumClient mAuthumClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class LoginActivity extends BaseActivity {
         if (!c.moveToFirst()) {
             Toast.makeText(this, " no content yet!", Toast.LENGTH_LONG).show();
         }else{
-            authenticateUser(c.getString(0));
+            registerClient(c.getString(0));
 
         }
         c.close();
@@ -76,7 +80,15 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Background
-    protected void authenticateUser(String email) {
+    public void registerClient(String email) {
+        dummy.com.sampleauthumclient.models.AuthumClient client = new dummy.com.sampleauthumclient.models.AuthumClient();
+        client.setClientId("sample_authum_client");
+        client.setName("Sample App");
+        mAuthumClient.registerClient(client);
+        authenticateUser(email);
+    }
+
+    private void authenticateUser(String email) {
         mUserManager.authenicate(email, new UserManager.AuthumAuthenticationCallback() {
             @Override
             public void authenticationSuccess(User user) {

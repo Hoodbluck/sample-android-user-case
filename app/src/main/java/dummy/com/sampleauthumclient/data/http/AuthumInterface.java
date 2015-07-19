@@ -1,6 +1,7 @@
 package dummy.com.sampleauthumclient.data.http;
 
 import org.androidannotations.annotations.rest.Get;
+import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.Rest;
 import org.androidannotations.api.rest.RestClientHeaders;
 import org.androidannotations.api.rest.RestClientRootUrl;
@@ -8,7 +9,7 @@ import org.androidannotations.api.rest.RestClientSupport;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
-import dummy.com.sampleauthumclient.models.AuthumResponse;
+import dummy.com.sampleauthumclient.models.*;
 
 /**
  * Created on 7/18/15.
@@ -23,4 +24,6 @@ public interface AuthumInterface extends RestClientRootUrl, RestClientSupport, R
         @Get("/client/{clientId}/user/email/{userEmail}/auth")
         AuthumResponse authenticate(String clientId, String userEmail);
 
+        @Post("/client")
+        AuthumResponse registerClient(dummy.com.sampleauthumclient.models.AuthumClient client);
 }

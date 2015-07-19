@@ -19,4 +19,8 @@ public class AuthumClient {
     public AuthumResponse authenticate(String appId, String email) {
         return mAuthumInterface.authenticate(appId, email);
     }
+
+    public AuthumResponse registerClient(dummy.com.sampleauthumclient.models.AuthumClient client) {
+        return mAuthumInterface.registerClient(client);
+    }
 }
