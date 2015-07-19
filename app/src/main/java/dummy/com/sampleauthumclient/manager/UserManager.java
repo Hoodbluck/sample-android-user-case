@@ -1,6 +1,6 @@
 package dummy.com.sampleauthumclient.manager;
 
-import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -29,8 +29,15 @@ public class UserManager {
         }
 
         else if (response.getCode() >= 0 ) {
-            User user = new Gson().fromJson(response.getValue(), User.class);
-            callback.authenticationSuccess(user);
+            if (response.getValue() instanceof LinkedTreeMap) {
+                LinkedTreeMap<String, String> map = (LinkedTreeMap)response.getValue();
+                User user = new User();
+                user.setFirstName(map.get("firstName"));
+                user.setLastName(map.get("lastName"));
+                user.setEmail(map.get("email"));
+                callback.authenticationSuccess(user);
+
+            }
         }
     }
 
