@@ -3,12 +3,14 @@ package dummy.com.sampleauthumclient.activities;
 import android.widget.EditText;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import dummy.com.sampleauthumclient.R;
+import dummy.com.sampleauthumclient.db.UserDatabase;
 import dummy.com.sampleauthumclient.models.User;
 
 /**
@@ -28,6 +30,9 @@ public class RegistrationActivity  extends BaseActivity {
     @ViewById(R.id.email_input)
     EditText mEmailInput;
 
+    @Bean
+    UserDatabase mUserDatabase;
+
     @AfterViews
     public void afterViews() {
         mFirstNameInput.setText(mUser.getFirstName());
@@ -37,6 +42,7 @@ public class RegistrationActivity  extends BaseActivity {
 
     @Click(R.id.register_button)
     public void onRegisterClick() {
+        mUserDatabase.addUser(mUser);
         SuccessLoggedInActivity_.intent(this)
                 .mUser(mUser)
                 .start();

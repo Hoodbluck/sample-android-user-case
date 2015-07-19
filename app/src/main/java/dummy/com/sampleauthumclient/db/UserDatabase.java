@@ -129,6 +129,7 @@ public class UserDatabase extends SQLiteOpenHelper{
                 user.setFirstName(cursor.getString(0));
                 user.setLastName(cursor.getString(1));
                 user.setEmail(cursor.getString(2));
+                return user;
             }
 
         }finally{
